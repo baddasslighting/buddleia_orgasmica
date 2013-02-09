@@ -183,7 +183,27 @@ void oneSensorCycle() { // Sensor ping cycle complete, do something with the res
     Serial.print("cm ");
     
     
-  
+    if (cm[i] > 0)
+    {
+      if (cm[i] > MAX_DISTANCE-10)
+      {
+        colorWipe(Color(255, 0, 0), 0);
+      }
+      else if (cm[i] > MAX_DISTANCE-20)
+      {
+        colorWipe(Color(0, 255, 0), 0);
+      }
+      else if (cm[i] > MAX_DISTANCE-30)
+      {
+        colorWipe(Color(0, 0, 255), 0);
+      }
+      else if (cm[i] > MAX_DISTANCE-40)
+      {
+        colorWipe(Color(128, 128, 128), 0);
+      }
+    }
+    
+/*  
     if ((cm[i] <= 10) && (cm[i] > 0)) {
   // Some example procedures showing how to display to the pixels  
   colorWipe(Color(255, 0, 0), 50);
@@ -192,7 +212,7 @@ void oneSensorCycle() { // Sensor ping cycle complete, do something with the res
   rainbow(20);
   rainbowCycle(20);
     }
-    
+    */
     
   }
     
