@@ -1,19 +1,9 @@
-//MouseNav3D nav;
-
-//Bud bud;
-
 byte rows = 10;
 byte cols = 6;
 Bud[][] Buddleia = new Bud[rows][cols];
 
-//byte gridPos = new PVector(0,0);
-//PVector gridDim = new PVector(6,10);
-
-
 void setup() {
   size(900,800,P3D);
-  //nav=new MouseNav3D(this);
-  //nav.trans.set(width/2,height/2,0);
 
   for(byte x=0; x < rows; x++) {
     for (byte y=0; y < cols; y++) {
@@ -30,10 +20,9 @@ void draw() {
   
   for(byte x=0; x < rows; x++) {
     for (byte y=0; y < cols; y++) {
-      Buddleia[x][y].draw();
+      Buddleia[x][y].draw(175, 0, 178); 
     }
   }
-  //bud.draw();
 }
 
 
