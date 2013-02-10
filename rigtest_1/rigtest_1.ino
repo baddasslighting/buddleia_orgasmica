@@ -24,7 +24,7 @@ Example sketch for driving Adafruit WS2801 pixels!
 
 *****************************************************************************/
 
-#define SONAR_NUM     1 // Number of sensors.
+#define SONAR_NUM     4 // Number of sensors.
 #define MAX_DISTANCE 50 // Maximum distance (in cm) to ping.
 #define PING_INTERVAL 33 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
 
@@ -61,10 +61,10 @@ uint8_t currentSensor = 0;          // Keeps track of which sensor is active.
 NewPing sonar[SONAR_NUM] = {     // Sensor object array.
 // THESE ARE THE PINS YOU CONNECT TO
 // TRIGGER FIRST, THEN ECHO
-//  NewPing(11, 12, MAX_DISTANCE), // Each sensor's trigger pin, echo pin, and max distance to ping.
-//  NewPing(4, 5, MAX_DISTANCE),
+  NewPing(6, 7, MAX_DISTANCE), // Each sensor's trigger pin, echo pin, and max distance to ping.
   NewPing(8, 9, MAX_DISTANCE),
-//  NewPing(8, 9, MAX_DISTANCE),
+  NewPing(10, 11, MAX_DISTANCE),
+  NewPing(12, 13, MAX_DISTANCE),
 };
 
 void setup() {
@@ -79,6 +79,9 @@ void setup() {
   pingTimer[0] = millis() + 75;           // First ping starts at 75ms, gives time for the Arduino to chill before starting.
   for (uint8_t i = 1; i < SONAR_NUM; i++) // Set the starting time for each sensor.
     pingTimer[i] = pingTimer[i - 1] + PING_INTERVAL;
+    
+    //initialize LEDs to show that this is doing something
+    colorWipe(Color(255, 255, 255), 0);
 }
 
 
@@ -175,32 +178,31 @@ void echoCheck() { // If ping received, set the sensor distance to array.
     cm[currentSensor] = sonar[currentSensor].ping_result / US_ROUNDTRIP_CM;
 }
 
+uint32_t ledColors[] =
+{
+  Color( 255, 0, 0 ),
+  Color( 0, 255, 0 ),
+  Color( 0, 0, 255 ),
+  Color( 55, 255, 55 ),
+};
+
 void oneSensorCycle() { // Sensor ping cycle complete, do something with the results.
   for (uint8_t i = 0; i < SONAR_NUM; i++) {
     Serial.print(i);
     Serial.print("=");
     Serial.print(cm[i]);
     Serial.print("cm ");
-    
-    
+
     if (cm[i] > 0)
     {
-      if (cm[i] > MAX_DISTANCE-10)
-      {
-        colorWipe(Color(255, 0, 0), 0);
-      }
-      else if (cm[i] > MAX_DISTANCE-20)
-      {
-        colorWipe(Color(0, 255, 0), 0);
-      }
-      else if (cm[i] > MAX_DISTANCE-30)
-      {
-        colorWipe(Color(0, 0, 255), 0);
-      }
-      else if (cm[i] > MAX_DISTANCE-40)
-      {
-        colorWipe(Color(128, 128, 128), 0);
-      }
+      colorWipe(ledColors[i], 0 );
+//      int index = cm[i] / 10;
+  //      setColorForRange(i, ledColors[index] );
+    }
+    else
+    {
+//      setColorForRange(i, Color(0, 0, 0) );
+//      colorWipe(Color(0, 0, 0), 0 );
     }
     
 /*  
@@ -238,3 +240,27 @@ void oneSensorCycle() { // Sensor ping cycle complete, do something with the res
 //  }
   Serial.println();
 }
+
+//break down the LEDs into zones, each zone is numLEDs / numSonars big
+//zone is 0, 1, 2, 3, etc. 
+void setColorForRange( byte zone, uint32_t c )
+{
+  int pixelsPerZone = strip.numPixels() / SONAR_NUM;
+  int startPixel = pixelsPerZone * zone;
+
+if (c != Color(0, 0, 0))
+{
+    Serial.print("  startPixel=");
+    Serial.print(startPixel);
+    Serial.print("  ");
+}
+
+
+/*  
+  for (int i = startPixel; i < startPixel + pixelsPerZone; i++ )
+  {
+      strip.setPixelColor(i, c);
+      strip.show();
+  }*/
+}
+
