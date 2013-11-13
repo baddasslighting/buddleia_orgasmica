@@ -24,7 +24,7 @@ int duration = 500;
   MIDI command. We will specify which not to play later. This is just for turning any
   old note on.
 */
-byte onChannelOneToTurnNoteOn = MIDI_COMMAND_NOTE_ON | MIDI_CHANNEL_1;
+byte onChannelOneTurnNoteOn = MIDI_COMMAND_NOTE_ON | MIDI_CHANNEL_1;
 
 /*
   MIDI notes range from 0x00 ( or in decimal, 0 ) to 0x7f ( in decimal, 127 ). Check the wiki for a link
@@ -37,7 +37,7 @@ byte note = 0x45;
   MIDI command. We will specify which not to play later. This is just for turning any
   old note off.
 */
-byte onChannelOneToTurnNoteOff = MIDI_COMMAND_NOTE_OFF | MIDI_CHANNEL_1;
+byte onChannelOneTurnNoteOff = MIDI_COMMAND_NOTE_OFF | MIDI_CHANNEL_1;
 
 /*
   Combine the command for changing some aspect or mode of the channel with the channel number to
@@ -63,17 +63,17 @@ void loop() {
   Serial.write(volume);                 // 3rd Byte: Volume amount.
   
   // Play a Note
-  Serial.write(onChannelOneToTurnNoteOn); // 1st Byte: The command. In this case, play note on channel 1.
-  Serial.write(note);                     // 2nd Byte: The note. 
-  Serial.write(MIDI_MAX_VELOCITY);        // 3rd Byte: Velocity ( key press hardness ).
+  Serial.write(onChannelOneTurnNoteOn); // 1st Byte: The command. In this case, play note on channel 1.
+  Serial.write(note);                   // 2nd Byte: The note. 
+  Serial.write(MIDI_MAX_VELOCITY);      // 3rd Byte: Velocity ( key press hardness ).
   
   // Wait
   delay(duration);
   
   // Stop Playing a Note
-  Serial.write(onChannelOneToTurnNoteOff); // 1st Byte: The command. In this case, stop paying note on channe 1.
-  Serial.write(note);                      // 2nd Byte: The note. 
-  Serial.write(MIDI_MAX_VELOCITY);         // 3rd Byte: Velocity ( key press hardness ).
+  Serial.write(onChannelOneTurnNoteOff); // 1st Byte: The command. In this case, stop paying note on channel 1.
+  Serial.write(note);                    // 2nd Byte: The note. 
+  Serial.write(MIDI_MAX_VELOCITY);       // 3rd Byte: Velocity ( key press hardness ).
   
   // Wait
   delay(duration);
