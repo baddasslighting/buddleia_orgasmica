@@ -34,7 +34,7 @@ byte note = 0x45;
 */
 int calculateVolumeIntensityFromProximity(int proximity) {
   // log10(1..1025) is 0.0 to 3.0, multiplied by 42 is 0 to ~127
-  return log10(proximity + 1) * 42;
+  return (int)(log10(proximity + 1) * 42.0);
 }
 
 void setup() {
