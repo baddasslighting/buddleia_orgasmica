@@ -1,5 +1,5 @@
 /*
-  Experiment to change the volume of a MIDI note proporially to the proximity of the item to the sensor. i.e. Closer means louder.
+  Experiment to change the volume of a MIDI note proporially to the proximity to the sensor. i.e. Closer means louder.
 */
 
 #include <math.h>
