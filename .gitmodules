@@ -1,0 +1,3 @@
+[submodule "Adafruit-WS2801-Library"]
+	path = Adafruit-WS2801-Library
+	url = git@github.com:adafruit/Adafruit-WS2801-Library.git
