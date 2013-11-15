@@ -19,6 +19,11 @@
 int sensorReadInterval = 250;
 
 /*
+  Below this level, no notes will be played. Adjust as needed.
+*/
+int proximityThreshold = 10;
+
+/*
   MIDI notes range from 0x00 ( 0 in decimal ) to 0x7f ( 127 in decimal ). Check the wiki for a link
   to a table of notes. We'll use A440 / A4, which is 440 Hz, represented by 0x45 ( 69 in decimal ).
 */
@@ -44,20 +49,30 @@ void setup() {
 
 void loop() {
   int proximity = analogRead(SENSOR_PIN);
-  int volume = calculateVolumeIntensityFromProximity(proximity);
   
-  // Change the volume of the note
-  Serial.write(MIDI_CONTROL_MODE_CHANGE | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, change something about channel 1.
-  Serial.write(MIDI_CHANNEL_VOLUME);                       // 2nd Byte: What we want to change, namely the volume. 
-  Serial.write(volume);                                    // 3rd Byte: Volume amount.  
-  
-  // Play a Note
-  Serial.write(MIDI_COMMAND_NOTE_ON | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, play note on channel 1.
-  Serial.write(note);                                  // 2nd Byte: The note. 
-  Serial.write(MIDI_MAX_VELOCITY);                     // 3rd Byte: Velocity ( key press hardness ).  
-  
+  // If we have enough signal from the proximity sensor, 
+  if (proximity > proximityThreshold) {
+    int volume = calculateVolumeIntensityFromProximity(proximity);
+    
+    // Change the volume of the note
+    Serial.write(MIDI_CONTROL_MODE_CHANGE | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, change something about channel 1.
+    Serial.write(MIDI_CHANNEL_VOLUME);                       // 2nd Byte: What we want to change, namely the volume. 
+    Serial.write(volume);                                    // 3rd Byte: Volume amount.  
+    
+    // Play a Note
+    Serial.write(MIDI_COMMAND_NOTE_ON | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, play note on channel 1.
+    Serial.write(note);                                  // 2nd Byte: The note. 
+    Serial.write(MIDI_MAX_VELOCITY);                     // 3rd Byte: Velocity ( key press hardness ).  
+  }
+  else {
+    // Stop playing the note
+    Serial.write(MIDI_COMMAND_NOTE_OFF | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, stop playing a note on channel 1.
+    Serial.write(note);                                   // 2nd Byte: The note. 
+    Serial.write(MIDI_MAX_VELOCITY);                      // 3rd Byte: Velocity ( key press hardness ).      
+  }
+      
   // Wait for a bit before reading the sensor again.
-  delay(sensorReadInterval);
+  delay(sensorReadInterval);  
 }
 
 
