@@ -47,6 +47,24 @@ void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
   dataBytes[MIDI_COMMAND_PITCH_BEND_LSB_POS] = leastSigByte;
 }
 
+void shiftArray(byte array[]) {
+  for (int i = 0; i < 7; i++) {
+    array[i] = array[i + 1];
+  }
+}
+
+byte values[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+byte averageBytesInArray(byte array[]) {
+  int value = 0;
+  
+  for (int i = 0; i < 8; i++) {
+    value = value + array[i];
+  } 
+ 
+  return (byte)(value / 8);
+}
+
 /*
   Convert the proximity sensor reading into a value from 0.0 to 1.0. Think of this as a percentage of how close
   the raver's hand is to the sensor. 0.0 being "no one in front" and 1.0 being someone getting allll up in the sensor's business!
@@ -72,11 +90,15 @@ void loop() {
   byte dataBytes[2];
   
   convertNormalizedPitchToBytes(normalizedProximity, dataBytes);
+  
+  shiftArray(values);
+  values[7] = dataBytes[MIDI_COMMAND_PITCH_BEND_MSB_POS];
+  byte pitchBend = averageBytesInArray(values);
 
   // Alter the pitch bend
   Serial.write(MIDI_COMMAND_PITCH_BEND | MIDI_CHANNEL_1);   // 1st Byte: The command. In this case, alter pitch bend on channel 1.
   Serial.write(dataBytes[MIDI_COMMAND_PITCH_BEND_LSB_POS]); // 2nd Byte: Pitch bend's least significant byte
-  Serial.write(dataBytes[MIDI_COMMAND_PITCH_BEND_MSB_POS]); // 3nd Byte: Pitch bend's most significant byte
+  Serial.write(pitchBend);                                  // 3nd Byte: Pitch bend's most significant byte
       
   // Wait for a bit before reading the sensor again.
   delay(sensorReadInterval);  
