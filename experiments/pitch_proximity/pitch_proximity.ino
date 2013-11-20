@@ -48,6 +48,11 @@ float calculateNormalizedPitchFromProximity(int proximity) {
 void setup() {
   // MIDI communicates at this baud rate. Do not change!
   Serial.begin(31250);
+  
+    // Play a Note
+  Serial.write(MIDI_COMMAND_NOTE_ON | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, play note on channel 1.
+  Serial.write(note);                                  // 2nd Byte: The note. 
+  Serial.write(MIDI_MAX_VELOCITY);                     // 3rd Byte: Velocity ( key press hardness ).  
 }
 
 void loop() {
@@ -58,11 +63,6 @@ void loop() {
   
   convertNormalizedPitchToBytes(normalizedProximity, dataBytes);
 
-  // Play a Note
-  Serial.write(MIDI_COMMAND_NOTE_ON | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, play note on channel 1.
-  Serial.write(note);                                  // 2nd Byte: The note. 
-  Serial.write(MIDI_MAX_VELOCITY);                     // 3rd Byte: Velocity ( key press hardness ).  
-  
   // Alter the pitch bend
   Serial.write(MIDI_COMMAND_PITCH_BEND | MIDI_CHANNEL_1);   // 1st Byte: The command. In this case, alter pitch bend on channel 1.
   Serial.write(dataBytes[MIDI_COMMAND_PITCH_BEND_LSB_POS]); // 2nd Byte: Pitch bend's least significant byte
