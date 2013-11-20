@@ -43,7 +43,7 @@ void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
 }
 
 float calculateNormalizedPitchFromProximity(int proximity) {
-  return (float)proximity / 900.0;
+  return (float)proximity / 600.0;
 }
 
 void setup() {
