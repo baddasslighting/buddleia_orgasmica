@@ -34,8 +34,9 @@ int sensorReadInterval = 250;
 byte note = 0x45;
 
 void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
-  byte mostSigByte = (byte)(((float)(MIDI_PITCH_BEND_MAX_MSB - MIDI_PITCH_BEND_MID_MSB)) * normalizedPitch) + MIDI_PITCH_BEND_MID_MSB;
-  byte leastSigByte = (byte)((float)MIDI_PITCH_BEND_MAX_MSB * normalizedPitch + MIDI_PITCH_BEND_MID_MSB);
+  byte mostSigByte = MIDI_PITCH_BEND_MID_MSB;
+  //byte mostSigByte = (byte)(((float)(MIDI_PITCH_BEND_MAX_MSB - MIDI_PITCH_BEND_MID_MSB)) * normalizedPitch) + MIDI_PITCH_BEND_MID_MSB;
+  byte leastSigByte = (byte)((float)MIDI_PITCH_BEND_MAX_LSB * normalizedPitch);
   
   dataBytes[MIDI_COMMAND_PITCH_BEND_MSB_POS] = mostSigByte;
   dataBytes[MIDI_COMMAND_PITCH_BEND_LSB_POS] = leastSigByte;
