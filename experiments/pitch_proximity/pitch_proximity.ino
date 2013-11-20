@@ -40,7 +40,7 @@ void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
   // Calculate the MSB: 64 * (value from 0.0 to 1.0, basically a percentage) + 64
   // This means if the sensor is reading 0, we're at a pitch bend of 64, which is "no change in pitch"
   // If the sensor is reading 1.0, we're at a pitch bend of 127, which is "max change in pitch"
-  byte mostSigByte  = MIDI_PITCH_BEND_MID_MSB * normalizedPitch + MIDI_PITCH_BEND_MID_MSB;
+  byte mostSigByte  = (byte)(MIDI_PITCH_BEND_MID_MSB * normalizedPitch + MIDI_PITCH_BEND_MID_MSB);
   byte leastSigByte = MIDI_PITCH_BEND_MIN_LSB;
   
   dataBytes[MIDI_COMMAND_PITCH_BEND_MSB_POS] = mostSigByte;
