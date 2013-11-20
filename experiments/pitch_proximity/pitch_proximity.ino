@@ -34,7 +34,8 @@ int sensorReadInterval = 50;
   MIDI notes range from 0x00 ( 0 in decimal ) to 0x7f ( 127 in decimal ). Check the wiki for a link
   to a table of notes. We'll use A440 / A4, which is 440 Hz, represented by 0x45 ( 69 in decimal ).
 */
-byte note = 0x45;
+//byte note = 0x45;
+byte note = 0x25;
 
 void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
   // Calculate the MSB: 64 * (value from 0.0 to 1.0, basically a percentage) + 64
