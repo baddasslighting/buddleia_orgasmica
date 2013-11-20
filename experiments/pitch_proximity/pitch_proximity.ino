@@ -34,8 +34,8 @@ int sensorReadInterval = 250;
 byte note = 0x45;
 
 void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
-  byte mostSigByte = MIDI_PITCH_BEND_MAX_MSB;
-  //byte mostSigByte = (byte)(((float)(MIDI_PITCH_BEND_MAX_MSB - MIDI_PITCH_BEND_MID_MSB)) * normalizedPitch) + MIDI_PITCH_BEND_MID_MSB;
+  //byte mostSigByte = MIDI_PITCH_BEND_MAX_MSB;
+  byte mostSigByte = (byte)(((float)(MIDI_PITCH_BEND_MAX_MSB - MIDI_PITCH_BEND_MID_MSB)) * normalizedPitch) + MIDI_PITCH_BEND_MID_MSB;
   byte leastSigByte = MIDI_PITCH_BEND_MID_LSB;
   
   dataBytes[MIDI_COMMAND_PITCH_BEND_MSB_POS] = mostSigByte;
@@ -43,7 +43,7 @@ void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
 }
 
 float calculateNormalizedPitchFromProximity(int proximity) {
-  return (float)proximity / 1023.0;
+  return (float)proximity / 900.0;
 }
 
 void setup() {
