@@ -35,7 +35,7 @@ byte note = 0x45;
 
 void convertNormalizedPitchToBytes(float normalizedPitch, byte dataBytes[]) {
   byte mostSigByte = (byte)(((float)(MIDI_PITCH_BEND_MAX_MSB - MIDI_PITCH_BEND_MID_MSB)) * normalizedPitch) + MIDI_PITCH_BEND_MID_MSB;
-  byte leastSigByte = MIDI_PITCH_BEND_MID_LSB;
+  byte leastSigByte = (byte)((float)MIDI_PITCH_BEND_MAX_MSB * normalizedPitch + MIDI_PITCH_BEND_MID_MSB);
   
   dataBytes[MIDI_COMMAND_PITCH_BEND_MSB_POS] = mostSigByte;
   dataBytes[MIDI_COMMAND_PITCH_BEND_LSB_POS] = leastSigByte;
@@ -52,7 +52,7 @@ void setup() {
     // Play a Note
   Serial.write(MIDI_COMMAND_NOTE_ON | MIDI_CHANNEL_1); // 1st Byte: The command. In this case, play note on channel 1.
   Serial.write(note);                                  // 2nd Byte: The note. 
-  Serial.write(MIDI_MAX_VELOCITY);                     // 3rd Byte: Velocity ( key press hardness ).  
+  Serial.write(MIDI_MAX_VELOCITY);                     // 3rd Byte: Velocity ( key press hardness ).    
 }
 
 void loop() {
