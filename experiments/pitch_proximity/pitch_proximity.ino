@@ -28,7 +28,7 @@
 /*
   Number of miliseconds between sensor reaadings. For example, 250ms is 4 times per second.
 */
-int sensorReadInterval = 250;
+int sensorReadInterval = 100;
 
 /*
   MIDI notes range from 0x00 ( 0 in decimal ) to 0x7f ( 127 in decimal ). Check the wiki for a link
