@@ -1,10 +1,10 @@
-#include "BuddleiaMIDI.h"
+#include "BuddleiaMIDINote.h"
 #include "BuddleiaSensor.h"
 
-BuddleiaMIDI midi[] = {
-  BuddleiaMIDI(MIDI_CHANNEL_1, 0x30),
-  BuddleiaMIDI(MIDI_CHANNEL_2, 0x40),
-  BuddleiaMIDI(MIDI_CHANNEL_3, 0x50)
+BuddleiaMIDINote midi[] = {
+  BuddleiaMIDINote(MIDI_CHANNEL_1, 0x30),
+  BuddleiaMIDINote(MIDI_CHANNEL_2, 0x40),
+  BuddleiaMIDINote(MIDI_CHANNEL_3, 0x50)
 };
 
 BuddleiaSensor sensor[] = {

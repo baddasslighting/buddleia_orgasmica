@@ -3,15 +3,15 @@
 
 #define MIDI_BAUD_RATE 31250
 
-#ifndef BuddleiaMIDI_h
-#define BuddleiaMIDI_h
+#ifndef BuddleiaMIDINote_h
+#define BuddleiaMIDINote_h
 
 #include <Arduino.h>
 
-class BuddleiaMIDI {
+class BuddleiaMIDINote {
   public:
-    BuddleiaMIDI(byte channel);
-    BuddleiaMIDI(byte channel, byte note);    
+    BuddleiaMIDINote(byte channel);
+    BuddleiaMIDINote(byte channel, byte note);    
     void setNote(byte note);
     void noteCommand(byte command);
     void playNote();
