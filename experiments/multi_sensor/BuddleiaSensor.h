@@ -20,6 +20,7 @@ class BuddleiaSensor {
     unsigned short _buffer[SENSOR_BUFFER_LEN];
     void updateBuffer(unsigned short reading);
     unsigned short bufferAverage();
+    unsigned short expand(unsigned short rawReading);
 };
 
 #endif
