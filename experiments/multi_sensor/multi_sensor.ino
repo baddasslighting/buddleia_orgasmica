@@ -23,4 +23,6 @@ void loop() {
   for (int i = 0; i < sizeof(activites); i++) {    
     activites[i].pitchBend();
   }  
+  
+  delay(10);
 }
