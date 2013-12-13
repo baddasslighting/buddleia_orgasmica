@@ -1,30 +1,26 @@
+#include "BuddleiaActivity.h"
 #include "BuddleiaMIDINote.h"
 #include "BuddleiaSensor.h"
 
-BuddleiaMIDINote midi[] = {
-  BuddleiaMIDINote(MIDI_CHANNEL_1, 0x30),
-  BuddleiaMIDINote(MIDI_CHANNEL_2, 0x40),
-  BuddleiaMIDINote(MIDI_CHANNEL_3, 0x50)
+BuddleiaActivity activites[] = {
+  BuddleiaActivity(SENSOR_PIN_1, MIDI_CHANNEL_1, 0x30),
+  BuddleiaActivity(SENSOR_PIN_2, MIDI_CHANNEL_2, 0x40),
+  BuddleiaActivity(SENSOR_PIN_3, MIDI_CHANNEL_3, 0x50),
+  BuddleiaActivity(SENSOR_PIN_4, MIDI_CHANNEL_4, 0x60),
+  BuddleiaActivity(SENSOR_PIN_5, MIDI_CHANNEL_5, 0x70)
 };
 
-BuddleiaSensor sensor[] = {
-  BuddleiaSensor(0),
-  BuddleiaSensor(1),
-  BuddleiaSensor(2)
-};
-  
 void setup() {  
   // MIDI communicates at this baud rate. Do not change!
   Serial.begin(MIDI_BAUD_RATE);  
   
-  for (int i = 0; i < sizeof(midi); i++) {
-    midi[i].playNote();
+  for (int i = 0; i < sizeof(activites); i++) {
+    activites[i].setup();
   }
 }
 
 void loop() {  
-  for (int i = 0; i < sizeof(midi); i++) {    
-    byte pitchBendAmount = map(sensor[i].read(), SENSOR_MIN, SENSOR_MAX, MIDI_PITCH_BEND_MID_MSB, MIDI_PITCH_BEND_MAX_MSB);    
-    midi[i].pitchBend(pitchBendAmount);
+  for (int i = 0; i < sizeof(activites); i++) {    
+    activites[i].pitchBend();
   }  
 }

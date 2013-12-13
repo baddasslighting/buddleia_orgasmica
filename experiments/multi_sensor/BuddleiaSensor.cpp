@@ -1,11 +1,25 @@
 #include "BuddleiaSensor.h"
 
 /**
+ * Zero arg constructor.
+ */
+BuddleiaSensor::BuddleiaSensor() {
+  initBuffer();
+}
+
+/**
  * Constructor
  */
 BuddleiaSensor::BuddleiaSensor(byte analogPin) {
+  initBuffer();
   _pin = analogPin;
-  memset(_buffer, 0, SENSOR_BUFFER_LEN); // Fill sensor buffer with all zeros
+}
+
+/**
+ * Set the analog pin to read sensor data from.
+ */
+void BuddleiaSensor::setPin(byte analogPin) {
+  _pin = analogPin;  
 }
 
 /**
@@ -19,6 +33,10 @@ unsigned short BuddleiaSensor::read() {
   updateBuffer(reading);
   
   return bufferAverage();
+}
+
+void BuddleiaSensor::initBuffer() {
+    memset(_buffer, 0, SENSOR_BUFFER_LEN); // Fill sensor buffer with all zeros  
 }
 
 /**

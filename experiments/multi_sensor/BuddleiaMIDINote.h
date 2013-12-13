@@ -10,8 +10,10 @@
 
 class BuddleiaMIDINote {
   public:
+    BuddleiaMIDINote();
     BuddleiaMIDINote(byte channel);
     BuddleiaMIDINote(byte channel, byte note);    
+    void setChannel(byte channel);
     void setNote(byte note);
     void noteCommand(byte command);
     void playNote();

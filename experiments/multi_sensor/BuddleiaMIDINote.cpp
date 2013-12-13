@@ -1,6 +1,13 @@
 #include "BuddleiaMIDINote.h"
 
 /**
+ * Zero arg constructor.
+ */
+BuddleiaMIDINote::BuddleiaMIDINote() {
+
+}
+
+/**
  * Channel constructor.
  */
 BuddleiaMIDINote::BuddleiaMIDINote(byte channel) {
@@ -13,6 +20,13 @@ BuddleiaMIDINote::BuddleiaMIDINote(byte channel) {
 BuddleiaMIDINote::BuddleiaMIDINote(byte channel, byte note) {
   _channel = channel;
   _note = note;
+}
+
+/**
+ * Set the channel.
+ */
+void BuddleiaMIDINote::setChannel(byte channel) {
+  _channel = channel;
 }
 
 /**
